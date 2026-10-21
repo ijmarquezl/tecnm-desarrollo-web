@@ -79,3 +79,7 @@ Repositorio oficial y entorno de laboratorio interactivo para el curso de **Desa
 ---
 **Docente Titular:** MCC. Iván Márquez Larios (`ijmarquezl`)  
 **Tecnológico Nacional de México — Campus Cancún**
+## DATOS DEL ESTUDIANTE
+ALAUMNO: ORLANDO TEC CIAU
+MATRICULA: 23531101
+TRACK: DESARROLLO
