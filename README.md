@@ -82,4 +82,5 @@ Repositorio oficial y entorno de laboratorio interactivo para el curso de **Desa
 ## DATOS DEL ESTUDIANTE
 ALAUMNO: ORLANDO TEC CIAU
 MATRICULA: 23531101
+CARRERA:ING. SISTEMAS
 TRACK: DESARROLLO
