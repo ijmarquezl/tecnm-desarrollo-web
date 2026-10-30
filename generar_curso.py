@@ -1187,8 +1187,9 @@ def leerme(sesiones: dict[int, dict]) -> str:
         datos = sesiones[numero]
         n = f"{numero:02d}"
         filas.append(
-            f"| **{n}** | {datos['tema']} | [Presentación]({enlace_slides(numero)}) | "
-            f"[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]({enlace_colab(numero)}) |"
+            f"| **{n}** | **{datos['tema']}**<br>"
+            f"[Presentación]({enlace_slides(numero)}) · "
+            f"[Cuaderno en Colab]({enlace_colab(numero)}) |"
         )
     filas_txt = "\n".join(filas)
     return f"""# Desarrollo de Aplicaciones Web (DAB-2201)
@@ -1204,7 +1205,7 @@ Repositorio oficial y entorno de laboratorio interactivo del curso de **Desarrol
 
 1. Realiza un **fork** de este repositorio a tu cuenta personal de GitHub.
 2. Identifícate editando este `README.md` con tu nombre, matrícula y track.
-3. Abre la sesión con el botón **Open in Colab**.
+3. Abre la sesión con el enlace **Cuaderno en Colab** de la tabla.
 4. Lee la presentación, resuelve el **reto** y ejecuta la **verificación**.
 5. Copia la plantilla de `plantillas/auditoria_sesionXX.md` a `auditorias/auditoria_sesionXX.md` y haz commit.
 
@@ -1277,8 +1278,10 @@ Un producto pequeño y acumulativo: **2 entidades relacionadas + usuario**, 8–
 
 ## 📚 Índice general de las 40 sesiones
 
-| Sesión | Tema principal | Presentación | Laboratorio |
-| :--- | :--- | :---: | :---: |
+> Cada fila incluye la **presentación** y el **cuaderno de Colab**. Si un enlace no se ve, entra a la carpeta [`laboratorios/`](laboratorios/) y abre la sesión correspondiente.
+
+| Sesión | Tema y accesos |
+| :---: | :--- |
 {filas_txt}
 
 ---
