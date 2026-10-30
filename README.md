@@ -51,12 +51,23 @@ Si es tu primera vez en el curso, empieza por la **sesión previa 00**: abrir tu
 
 ---
 
-## 🏗️ Proyecto Integrador Semestral (30%)
+## 🏗️ Proyecto Integrador (30%)
 
-- **Hito 1 (Sesión 10):** Mock API RESTful con especificación OpenAPI y validation harness.
-- **Hito 2 (Sesión 20):** API con inyección de dependencias, autenticación JWT y roles (RBAC).
-- **Hito 3 (Sesión 30):** API persistente con base de datos relacional, migraciones y blindaje OWASP.
-- **Hito 4 (Sesión 40):** Demostración de API full-stack desplegada en producción con cliente SPA.
+**Guía oficial:** [proyecto_integrador/GUIA.md](proyecto_integrador/GUIA.md)  
+**Presentación para clase:** [proyecto-integrador.html](https://ijmarquezl.github.io/tecnm-desarrollo-web/presentaciones/proyecto-integrador.html)
+
+Un producto pequeño y acumulativo: **2 entidades relacionadas + usuario**, 8–10 endpoints, una SPA de una página y 4 hitos. Equipos de 2.
+
+| Hito | Sesión | Foco | Etiqueta |
+| :--- | :---: | :--- | :---: |
+| **1** | 10 | Mock API, OpenAPI, validación y 8 pruebas | `v0.1-hito1` |
+| **2** | 20 | Capas, DI, registro/login, JWT y RBAC | `v0.2-hito2` |
+| **3** | 30 | Persistencia, migración, transacciones y OWASP | `v0.3-hito3` |
+| **4** | 40 | SPA, Dockerfile, E2E y demo de 5 minutos | `v1.0-final` |
+
+**Avances:** propuesta en la sesión 4 y checkpoints en las sesiones 15, 25 y 35. Si falta un checkpoint, el hito correspondiente se limita a 70% hasta regularizarse.
+
+**Documentos:** [propuesta](proyecto_integrador/docs/00-propuesta.md) · [checkpoints](proyecto_integrador/docs/checkpoint.md) · [hito 1](proyecto_integrador/docs/hito-1.md) · [hito 2](proyecto_integrador/docs/hito-2.md) · [hito 3](proyecto_integrador/docs/hito-3.md) · [hito 4](proyecto_integrador/docs/hito-4.md) · [rúbrica](proyecto_integrador/docs/rubrica.md) · [equipo](proyecto_integrador/docs/equipo.md) · [FAQ](proyecto_integrador/docs/faq.md)
 
 ---
 
@@ -144,7 +155,7 @@ python3 generar_curso.py --solo 2
 ## 📋 Criterios de evaluación oficial
 
 - **40% Laboratorios diarios:** cuadernos de Colab ejecutados y bitácoras en GitHub.
-- **30% Proyecto Integrador:** API RESTful full-stack con persistencia y frontend (4 hitos).
+- **30% Proyecto Integrador:** API pequeña con autenticación, persistencia, SPA y 4 hitos.
 - **20% Evaluaciones prácticas:** 4 hitos prácticos de unidad.
 - **10% Participación activa:** sesiones sincrónicas en MS Teams.
 

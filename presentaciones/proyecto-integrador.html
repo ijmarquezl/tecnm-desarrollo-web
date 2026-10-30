@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto Integrador | Desarrollo de Aplicaciones Web</title>
+  <style>
+:root {
+  --bg: #f3f7fb;
+  --bg-2: #e8f1f8;
+  --card: rgba(255, 255, 255, 0.94);
+  --card-hover: #ffffff;
+  --border: #d3dfea;
+  --border-strong: #b9cad9;
+  --accent: #0969da;
+  --accent-soft: #ddf4ff;
+  --green: #1a7f37;
+  --green-soft: #dafbe1;
+  --orange: #b35900;
+  --orange-soft: #fff1d6;
+  --red: #b42318;
+  --red-soft: #ffebe9;
+  --silver: #5b6b7c;
+  --text: #334155;
+  --text-bright: #0f172a;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #e3f0fb 0%, transparent 60%),
+    radial-gradient(900px 500px at 110% 110%, #e8f8ee 0%, transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+header {
+  flex: 0 0 auto;
+  height: 56px;
+  padding: 0 28px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand { font-weight: 800; color: var(--text-bright); font-size: 0.92rem; letter-spacing: 0.2px; }
+.brand span { color: var(--accent); }
+.tag {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid #b6e3ff;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-family: var(--mono);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 62vw;
+}
+main { flex: 1 1 auto; position: relative; overflow: hidden; }
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 26px 52px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(18px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+}
+.slide.active { opacity: 1; visibility: visible; transform: translateX(0); }
+.slide-inner { width: 100%; max-width: 1380px; margin: auto; }
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid #b6e3ff;
+  border-radius: 999px;
+  padding: 5px 12px;
+  margin-bottom: 12px;
+}
+.kicker.green { color: var(--green); background: var(--green-soft); border-color: #aceebb; }
+.kicker.orange { color: var(--orange); background: var(--orange-soft); border-color: #ffd8a8; }
+.kicker.red { color: var(--red); background: var(--red-soft); border-color: #ffcecb; }
+h1 { font-size: 2.35rem; line-height: 1.12; color: var(--text-bright); margin-bottom: 10px; letter-spacing: -0.02em; }
+h2 { font-size: 1.7rem; line-height: 1.18; color: var(--text-bright); margin-bottom: 8px; letter-spacing: -0.01em; }
+h3 { font-size: 0.98rem; color: var(--text-bright); margin-bottom: 4px; }
+.lead { font-size: 1.04rem; line-height: 1.48; color: #475569; max-width: 1050px; margin-bottom: 14px; }
+.lead strong { color: var(--text-bright); }
+.small { font-size: 0.82rem; color: var(--silver); line-height: 1.45; }
+.grid-2, .grid-3, .grid-4 { display: grid; gap: 14px; align-items: stretch; }
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 15px 16px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card.clickable { cursor: pointer; }
+.card.clickable:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(9, 105, 218, 0.10); }
+.card.expanded { border-color: var(--accent); background: #fff; }
+.card-head { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; margin-bottom: 6px; }
+.card p, .card li { font-size: 0.9rem; line-height: 1.45; color: var(--text); }
+.card ul { padding-left: 18px; }
+.card li { margin-bottom: 5px; }
+.card-details {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.25s ease;
+  font-size: 0.8rem;
+  color: #4b5b6b;
+  line-height: 1.45;
+}
+.card.expanded .card-details { max-height: 320px; opacity: 1; margin-top: 9px; padding-top: 9px; border-top: 1px dashed var(--border); }
+.expand-hint { font-size: 0.72rem; color: var(--accent); font-family: var(--mono); white-space: nowrap; }
+.num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-right: 8px;
+}
+.term { font-size: 1.02rem; font-weight: 800; color: var(--text-bright); margin-bottom: 4px; }
+.analogy { margin-top: 7px; padding-top: 7px; border-top: 1px dashed var(--border); font-size: 0.8rem; color: #4b5b6b; font-style: italic; }
+.theory-detail { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); font-size: 0.82rem; line-height: 1.42; color: #4b5b6b; }
+.analogy::before { content: "En la vida diaria: "; font-style: normal; font-weight: 700; color: var(--silver); }
+.objective { min-height: 92px; }
+.objective p { font-size: 0.88rem; }
+.timeline { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 12px 0; }
+.step { position: relative; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 13px 14px; }
+.step::before { content: ""; position: absolute; top: 0; left: 14px; right: 14px; height: 3px; border-radius: 3px; background: var(--accent); }
+.step .time { font-family: var(--mono); font-size: 0.72rem; font-weight: 800; color: var(--accent); margin-bottom: 4px; }
+.step strong { display: block; color: var(--text-bright); font-size: 0.9rem; margin-bottom: 3px; }
+.step p { font-size: 0.78rem; line-height: 1.4; color: #4b5b6b; }
+.interactive-box {
+  margin-top: 12px;
+  padding: 12px 15px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.interactive-box strong { color: var(--text-bright); }
+.terminal {
+  background: #0d1726;
+  border: 1px solid #26364a;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(2, 8, 20, 0.22);
+}
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 11px;
+  background: #132033;
+  border-bottom: 1px solid #26364a;
+}
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.dot.r { background: #ff5f56; } .dot.y { background: #ffbd2e; } .dot.g { background: #27c93f; }
+.terminal-title { margin-left: 8px; font-family: var(--mono); font-size: 0.7rem; color: #8ea4bd; }
+pre.code {
+  margin: 0;
+  padding: 13px 15px;
+  color: #e6edf6;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 52vh;
+  overflow: auto;
+}
+pre.code.small { font-size: 0.7rem; }
+table.cases { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+table.cases th, table.cases td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+table.cases th { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--silver); }
+table.cases code { font-family: var(--mono); font-size: 0.74rem; background: #f1f5f9; padding: 1px 4px; border-radius: 4px; }
+.checklist { display: grid; gap: 7px; }
+.check { display: flex; gap: 9px; align-items: flex-start; font-size: 0.82rem; line-height: 1.4; }
+.check .box { flex: 0 0 16px; width: 16px; height: 16px; border: 1.5px solid var(--border-strong); border-radius: 4px; margin-top: 1px; background: #fff; }
+.check strong { color: var(--text-bright); }
+.callout { margin-top: 12px; padding: 11px 14px; border-radius: 8px; font-size: 0.84rem; line-height: 1.45; }
+.callout.blue { background: var(--accent-soft); border: 1px solid #b6e3ff; color: #0a4b8c; }
+.callout.green { background: var(--green-soft); border: 1px solid #aceebb; color: #0b4f22; }
+.callout.orange { background: var(--orange-soft); border: 1px solid #ffd8a8; color: #6b3a00; }
+.callout.red { background: var(--red-soft); border: 1px solid #ffcecb; color: #7a1a12; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-family: var(--mono); font-size: 0.7rem; font-weight: 800; }
+.badge.get { background: #ddf4ff; color: #0550ae; } .badge.post { background: #dafbe1; color: #116329; }
+.badge.put { background: #fff8c5; color: #7d4e00; } .badge.delete { background: #ffebe9; color: #a40e26; }
+.badge.patch { background: #fbefff; color: #8250df; }
+.buttons { display: flex; gap: 9px; flex-wrap: wrap; margin-top: 12px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 14px; border-radius: 8px; border: 1px solid var(--border);
+  background: #fff; color: var(--text-bright); font-size: 0.82rem; font-weight: 700;
+  text-decoration: none;
+}
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn:hover { filter: brightness(0.98); }
+.footer-note { margin-top: 12px; font-size: 0.76rem; color: var(--silver); }
+.layout-result { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 16px; align-items: start; }
+.criteria-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 15px; }
+.criteria-card h3 { margin-bottom: 8px; }
+.criteria-card ul { padding-left: 18px; }
+.criteria-card li { font-size: 0.8rem; line-height: 1.42; margin-bottom: 6px; }
+footer {
+  flex: 0 0 auto;
+  height: 52px;
+  padding: 0 28px;
+  background: rgba(255, 255, 255, 0.9);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.progress { font-size: 0.8rem; font-family: var(--mono); color: var(--accent); font-weight: 800; }
+.progress span { color: var(--silver); font-weight: 500; }
+.controls { display: flex; gap: 8px; }
+button {
+  background: #fff; color: var(--text-bright); border: 1px solid var(--border);
+  padding: 7px 15px; border-radius: 7px; cursor: pointer; font-weight: 700; font-size: 0.8rem;
+  font-family: var(--sans);
+}
+button:hover { background: #f8fafc; }
+button:disabled { opacity: 0.38; cursor: not-allowed; }
+code { font-family: var(--mono); font-size: 0.86em; background: #eef4fa; padding: 1px 5px; border-radius: 4px; color: #0a3069; }
+pre code { background: none; padding: 0; color: inherit; }
+ul.clean { list-style: none; padding: 0; }
+ul.clean li { position: relative; padding-left: 18px; margin-bottom: 6px; font-size: 0.84rem; line-height: 1.42; }
+ul.clean li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
+@media (max-width: 1180px) {
+  .slide { padding: 20px 26px 16px; }
+  h1 { font-size: 2rem; } h2 { font-size: 1.45rem; }
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .layout-result { grid-template-columns: 1fr; }
+}
+@media print {
+  body { overflow: visible; height: auto; }
+  header, footer, .controls { display: none; }
+  main { display: block; }
+  .slide { position: relative; opacity: 1; visibility: visible; transform: none; page-break-after: always; min-height: 100vh; }
+}
+</style>
+</head>
+<body>
+  <header>
+    <div class="brand">TecNM Cancún <span>·</span> DAB-2201</div>
+    <div class="tag">PROYECTO INTEGRADOR &bull; 30% DE LA CALIFICACIÓN</div>
+  </header>
+  <main>
+    <section class="slide active"><div class="slide-inner">
+      <div class="kicker green">Proyecto Integrador &bull; 30%</div>
+      <h1>Una API pequeña, un producto real</h1>
+      <p class="lead">Dos entidades, una SPA y cuatro hitos. Sin funciones extra: lo que importa es que el producto funcione, esté seguro y puedan demostrarlo.</p>
+      <div class="grid-3">
+        <div class="card"><div class="term"><span class="num">01</span>Alcance</div><p>2 entidades relacionadas + usuario. 8–10 endpoints. Una sola página web.</p></div>
+        <div class="card"><div class="term"><span class="num">02</span>Equipo</div><p>Equipos de 2. Ambos programan, ambos explican, ambos defienden.</p></div>
+        <div class="card"><div class="term"><span class="num">03</span>Resultado</div><p>Una API con auth, base de datos, pruebas y una SPA que la consume.</p></div>
+      </div>
+      <div class="callout blue"><strong>Regla de oro:</strong> si una funcionalidad no está en la guía, no entra al proyecto.</div>
+</div></section>
+    <section class="slide"><div class="slide-inner">
+      <div class="kicker">Qué van a construir</div>
+      <h2>El resultado del Hito 4</h2>
+      <div class="layout-result">
+        <div class="terminal"><div class="terminal-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="terminal-title">producto final</span></div>
+          <pre class="code">GET  /                  -> SPA: login, lista, crear, eliminar
+GET  /docs              -> OpenAPI
+GET  /health            -> {"status":"ok"}
+
+POST /api/registro      -> 201
+POST /api/token         -> 200 + JWT
+GET  /api/tableros      -> 200 (solo los míos)
+POST /api/tableros      -> 201
+GET  /api/tableros/1/tareas -> 200
+POST /api/tableros/1/tareas -> 201
+DELETE /api/tareas/1    -> 204</pre>
+        </div>
+        <div class="criteria-card">
+          <h3>Lo que debe funcionar</h3>
+          <ul>
+            <li>Registro e inicio de sesión.</li>
+            <li>Crear, listar y eliminar lo propio.</li>
+            <li>Un admin ve todo; un usuario no ve lo ajeno.</li>
+            <li>Errores 401, 403, 404 y 422 claros.</li>
+            <li>Pruebas en verde y demo reproducible.</li>
+          </ul>
+        </div>
+      </div>
+</div></section>
+    <section class="slide"><div class="slide-inner">
+      <div class="kicker">Catálogo</div>
+      <h2>Elijan un dominio (y solo uno)</h2>
+      <p class="lead">Todos tienen una relación 1:N, reglas de negocio y un filtro. No se puede usar el dominio de los laboratorios.</p>
+      <div class="grid-3">
+        <div class="card"><div class="term"><span class="num">A</span>Tablero → Tarea</div><p>Estados, prioridad y fecha límite.</p><div class="small">Útil para organización personal.</div></div>
+        <div class="card"><div class="term"><span class="num">B</span>Espacio → Reserva</div><p>Inicio, fin y choques de horario.</p><div class="small">Útil para reservar aulas o canchas.</div></div>
+        <div class="card"><div class="term"><span class="num">C</span>Categoría → Gasto</div><p>Monto, fecha y total del mes.</p><div class="small">Útil para controlar gastos.</div></div>
+      </div>
+      <div class="callout orange"><strong>Una decisión por equipo:</strong> el dominio se registra en la propuesta de la sesión 4 y no se cambia después del Hito 1.</div>
+</div></section>
+    <section class="slide"><div class="slide-inner">
+      <div class="kicker">Los cuatro hitos</div>
+      <h2>Un producto que crece por partes</h2>
+      <div class="timeline">
+        <div class="step"><div class="time">Sesión 10 &bull; 7.5%</div><strong>1. Contrato y mock</strong><p>API en memoria, OpenAPI, validación y 8 pruebas.</p></div>
+        <div class="step"><div class="time">Sesión 20 &bull; 7.5%</div><strong>2. Capas y seguridad</strong><p>Router/servicio/repositorio, JWT, roles y 10 pruebas.</p></div>
+        <div class="step"><div class="time">Sesión 30 &bull; 7.5%</div><strong>3. Persistencia y OWASP</strong><p>ORM, migración, transacciones, SQLi y 12 pruebas.</p></div>
+        <div class="step"><div class="time">Sesión 40 &bull; 7.5%</div><strong>4. Producto</strong><p>SPA, Dockerfile, E2E y demo de 5 minutos.</p></div>
+      </div>
+      <div class="callout green"><strong>Cada hito es acumulativo:</strong> no se reescribe desde cero; se mejora lo anterior.</div>
+</div></section>
+    <section class="slide"><div class="slide-inner">
+      <div class="kicker green">Cómo pido avances</div>
+      <h2>Cuatro momentos, no solo el final</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Calendario</h3>
+          <ul class="clean">
+            <li><strong>Sesión 4:</strong> propuesta de una página.</li>
+            <li><strong>Sesión 15:</strong> checkpoint 1.</li>
+            <li><strong>Sesión 25:</strong> checkpoint 2.</li>
+            <li><strong>Sesión 35:</strong> ensayo del Hito 4.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Qué entregan</h3>
+          <p><strong>Hecho</strong> con evidencia · <strong>Siguiente</strong> con fecha · <strong>Bloqueo</strong> concreto · <strong>Demo</strong> de 3 minutos.</p>
+          <div class="small" style="margin-top:8px;">Si falta el checkpoint, el hito se limita a 70% hasta regularizarse.</div>
+        </div>
+      </div>
+      <div class="callout orange"><strong>No es un trámite:</strong> el checkpoint existe para detectar el riesgo cuando todavía hay tiempo de corregirlo.</div>
+</div></section>
+    <section class="slide"><div class="slide-inner">
+      <div class="kicker red">Reglas y evaluación</div>
+      <h2>Qué se vale y qué no</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Sí</h3>
+          <ul class="clean">
+            <li>FastAPI o PHP 8 con aprobación.</li>
+            <li>SQLite o PostgreSQL.</li>
+            <li>HTML, CSS y JavaScript vanilla.</li>
+            <li>IA como copiloto, con auditoría.</li>
+            <li>Dockerfile y demo en Codespaces/Render.</li>
+          </ul>
+        </div>
+        <div class="card" style="border-left:4px solid var(--red);">
+          <h3>No</h3>
+          <ul class="clean">
+            <li>React, Vue o Angular.</li>
+            <li>Pagos, chat, tiempo real o IA en el producto.</li>
+            <li>Tercera entidad o funciones extra.</li>
+            <li>Copiar el dominio o el código de los laboratorios.</li>
+            <li>Secretos o contraseñas en el repositorio.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout blue"><strong>Evaluación por hito:</strong> 40% funcionalidad · 20% seguridad · 20% pruebas · 10% documentación · 10% demo. La nota individual se ajusta con commits y defensa.</div>
+</div></section>
+    <section class="slide"><div class="slide-inner">
+      <div class="kicker">Primer paso</div>
+      <h2>Antes de la sesión 4</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>La propuesta</h3>
+          <ul class="clean">
+            <li>Equipo de 2 y roles.</li>
+            <li>Dominio elegido.</li>
+            <li>2 entidades y sus campos.</li>
+            <li>8–10 endpoints.</li>
+            <li>5 casos de prueba y 3 riesgos.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Dónde está todo</h3>
+          <p>La guía completa, las plantillas de propuesta, checkpoint y equipo, y los checklists de los cuatro hitos.</p>
+          <div class="small" style="margin-top:8px;">Abre la guía y empieza por <code>docs/00-propuesta.md</code>.</div>
+        </div>
+      </div>
+      <div class="buttons">
+        <a class="btn primary" href="https://github.com/ijmarquezl/tecnm-desarrollo-web/blob/main/proyecto_integrador/GUIA.md">Abrir la guía oficial &rarr;</a>
+        <a class="btn" href="https://github.com/ijmarquezl/tecnm-desarrollo-web/blob/main/proyecto_integrador/docs/00-propuesta.md">Plantilla de propuesta</a>
+      </div>
+      <div class="footer-note">MCC. Iván Márquez Larios &bull; TecNM Cancún &bull; DAB-2201</div>
+</div></section>
+  </main>
+  <footer>
+    <div class="progress" id="slideIndicator">SLIDE 1 / 1</div>
+    <div class="controls">
+      <button id="prevBtn" onclick="prevSlide()" disabled>&larr; Anterior</button>
+      <button id="nextBtn" onclick="nextSlide()">Siguiente &rarr;</button>
+    </div>
+  </footer>
+  <script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const indicator = document.getElementById('slideIndicator');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+function updateSlides() {
+  slides.forEach((slide, index) => slide.classList.toggle('active', index === currentSlide));
+  indicator.textContent = `SLIDE ${currentSlide + 1} / ${slides.length}`;
+  prevBtn.disabled = currentSlide === 0;
+  nextBtn.disabled = currentSlide === slides.length - 1;
+  if (location.hash !== `#${currentSlide + 1}`) {
+    history.replaceState(null, '', `#${currentSlide + 1}`);
+  }
+}
+function nextSlide() { if (currentSlide < slides.length - 1) { currentSlide++; updateSlides(); } }
+function prevSlide() { if (currentSlide > 0) { currentSlide--; updateSlides(); } }
+function toggleCard(card) {
+  card.classList.toggle('expanded');
+  const hint = card.querySelector('.expand-hint');
+  if (hint) hint.textContent = card.classList.contains('expanded') ? '[-]' : '[+]';
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prevSlide(); }
+  if (e.key === 'Home') { currentSlide = 0; updateSlides(); }
+  if (e.key === 'End') { currentSlide = slides.length - 1; updateSlides(); }
+});
+const inicial = parseInt(location.hash.replace('#', ''), 10);
+if (!Number.isNaN(inicial) && inicial >= 1 && inicial <= slides.length) currentSlide = inicial - 1;
+updateSlides();
+</script>
+</body>
+</html>

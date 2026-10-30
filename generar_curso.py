@@ -1244,12 +1244,23 @@ Si es tu primera vez en el curso, empieza por la **sesión previa 00**: abrir tu
 
 ---
 
-## 🏗️ Proyecto Integrador Semestral (30%)
+## 🏗️ Proyecto Integrador (30%)
 
-- **Hito 1 (Sesión 10):** Mock API RESTful con especificación OpenAPI y validation harness.
-- **Hito 2 (Sesión 20):** API con inyección de dependencias, autenticación JWT y roles (RBAC).
-- **Hito 3 (Sesión 30):** API persistente con base de datos relacional, migraciones y blindaje OWASP.
-- **Hito 4 (Sesión 40):** Demostración de API full-stack desplegada en producción con cliente SPA.
+**Guía oficial:** [proyecto_integrador/GUIA.md](proyecto_integrador/GUIA.md)  
+**Presentación para clase:** [proyecto-integrador.html](https://ijmarquezl.github.io/tecnm-desarrollo-web/presentaciones/proyecto-integrador.html)
+
+Un producto pequeño y acumulativo: **2 entidades relacionadas + usuario**, 8–10 endpoints, una SPA de una página y 4 hitos. Equipos de 2.
+
+| Hito | Sesión | Foco | Etiqueta |
+| :--- | :---: | :--- | :---: |
+| **1** | 10 | Mock API, OpenAPI, validación y 8 pruebas | `v0.1-hito1` |
+| **2** | 20 | Capas, DI, registro/login, JWT y RBAC | `v0.2-hito2` |
+| **3** | 30 | Persistencia, migración, transacciones y OWASP | `v0.3-hito3` |
+| **4** | 40 | SPA, Dockerfile, E2E y demo de 5 minutos | `v1.0-final` |
+
+**Avances:** propuesta en la sesión 4 y checkpoints en las sesiones 15, 25 y 35. Si falta un checkpoint, el hito correspondiente se limita a 70% hasta regularizarse.
+
+**Documentos:** [propuesta](proyecto_integrador/docs/00-propuesta.md) · [checkpoints](proyecto_integrador/docs/checkpoint.md) · [hito 1](proyecto_integrador/docs/hito-1.md) · [hito 2](proyecto_integrador/docs/hito-2.md) · [hito 3](proyecto_integrador/docs/hito-3.md) · [hito 4](proyecto_integrador/docs/hito-4.md) · [rúbrica](proyecto_integrador/docs/rubrica.md) · [equipo](proyecto_integrador/docs/equipo.md) · [FAQ](proyecto_integrador/docs/faq.md)
 
 ---
 
@@ -1298,7 +1309,7 @@ python3 generar_curso.py --solo 2
 ## 📋 Criterios de evaluación oficial
 
 - **40% Laboratorios diarios:** cuadernos de Colab ejecutados y bitácoras en GitHub.
-- **30% Proyecto Integrador:** API RESTful full-stack con persistencia y frontend (4 hitos).
+- **30% Proyecto Integrador:** API pequeña con autenticación, persistencia, SPA y 4 hitos.
 - **20% Evaluaciones prácticas:** 4 hitos prácticos de unidad.
 - **10% Participación activa:** sesiones sincrónicas en MS Teams.
 
@@ -1384,10 +1395,12 @@ def portada_sitio(sesiones: dict[int, dict]) -> str:
       <div class="buttons">
         <a class="btn primary" href="presentaciones/lab00-git-codespaces.html">Empezar con Git y Codespaces &rarr;</a>
         <a class="btn" href="presentaciones/sesion01.html">Ver la Sesión 01</a>
+        <a class="btn" href="https://github.com/ijmarquezl/tecnm-desarrollo-web/blob/main/proyecto_integrador/GUIA.md">Guía del Proyecto Integrador</a>
         <a class="btn" href="https://github.com/ijmarquezl/tecnm-desarrollo-web">Repositorio en GitHub</a>
       </div>
     </section>
     <div class="note"><strong>Antes de la sesión 01:</strong> abre tu fork, ejecuta tu primer script y publica tu primer commit. La guía está en <a href="https://github.com/ijmarquezl/tecnm-desarrollo-web/blob/main/laboratorios/lab00-git-codespaces.md">Laboratorio 00</a>.</div>
+    <div class="note"><strong>Proyecto Integrador (30%):</strong> equipos de 2, dos entidades y cuatro hitos. Consulta la <a href="https://github.com/ijmarquezl/tecnm-desarrollo-web/blob/main/proyecto_integrador/GUIA.md">guía oficial</a> o abre la <a href="presentaciones/proyecto-integrador.html">presentación para clase</a>.</div>
     {"".join(tarjetas)}
     <footer>MCC. Iván Márquez Larios (<code>ijmarquezl</code>) · Tecnológico Nacional de México — Campus Cancún<br>
       El contenido se genera desde <code>datos_sesiones_b*.py</code> con <code>python3 generar_curso.py</code>.</footer>
@@ -1395,6 +1408,193 @@ def portada_sitio(sesiones: dict[int, dict]) -> str:
 </body>
 </html>
 """
+
+
+def presentacion_proyecto() -> str:
+    """Presentación de 7 diapositivas para explicar el proyecto en clase."""
+    cabecera = f"""<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto Integrador | Desarrollo de Aplicaciones Web</title>
+  <style>{CSS}</style>
+</head>
+<body>
+  <header>
+    <div class="brand">TecNM Cancún <span>·</span> DAB-2201</div>
+    <div class="tag">PROYECTO INTEGRADOR &bull; 30% DE LA CALIFICACIÓN</div>
+  </header>
+  <main>
+"""
+    partes = [cabecera]
+    partes.append(
+        diapositiva(
+            """
+      <div class="kicker green">Proyecto Integrador &bull; 30%</div>
+      <h1>Una API pequeña, un producto real</h1>
+      <p class="lead">Dos entidades, una SPA y cuatro hitos. Sin funciones extra: lo que importa es que el producto funcione, esté seguro y puedan demostrarlo.</p>
+      <div class="grid-3">
+        <div class="card"><div class="term"><span class="num">01</span>Alcance</div><p>2 entidades relacionadas + usuario. 8–10 endpoints. Una sola página web.</p></div>
+        <div class="card"><div class="term"><span class="num">02</span>Equipo</div><p>Equipos de 2. Ambos programan, ambos explican, ambos defienden.</p></div>
+        <div class="card"><div class="term"><span class="num">03</span>Resultado</div><p>Una API con auth, base de datos, pruebas y una SPA que la consume.</p></div>
+      </div>
+      <div class="callout blue"><strong>Regla de oro:</strong> si una funcionalidad no está en la guía, no entra al proyecto.</div>
+""",
+            activa=True,
+        )
+    )
+    partes.append(
+        diapositiva(
+            """
+      <div class="kicker">Qué van a construir</div>
+      <h2>El resultado del Hito 4</h2>
+      <div class="layout-result">
+        <div class="terminal"><div class="terminal-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="terminal-title">producto final</span></div>
+          <pre class="code">GET  /                  -> SPA: login, lista, crear, eliminar
+GET  /docs              -> OpenAPI
+GET  /health            -> {"status":"ok"}
+
+POST /api/registro      -> 201
+POST /api/token         -> 200 + JWT
+GET  /api/tableros      -> 200 (solo los míos)
+POST /api/tableros      -> 201
+GET  /api/tableros/1/tareas -> 200
+POST /api/tableros/1/tareas -> 201
+DELETE /api/tareas/1    -> 204</pre>
+        </div>
+        <div class="criteria-card">
+          <h3>Lo que debe funcionar</h3>
+          <ul>
+            <li>Registro e inicio de sesión.</li>
+            <li>Crear, listar y eliminar lo propio.</li>
+            <li>Un admin ve todo; un usuario no ve lo ajeno.</li>
+            <li>Errores 401, 403, 404 y 422 claros.</li>
+            <li>Pruebas en verde y demo reproducible.</li>
+          </ul>
+        </div>
+      </div>
+""",
+        )
+    )
+    partes.append(
+        diapositiva(
+            """
+      <div class="kicker">Catálogo</div>
+      <h2>Elijan un dominio (y solo uno)</h2>
+      <p class="lead">Todos tienen una relación 1:N, reglas de negocio y un filtro. No se puede usar el dominio de los laboratorios.</p>
+      <div class="grid-3">
+        <div class="card"><div class="term"><span class="num">A</span>Tablero → Tarea</div><p>Estados, prioridad y fecha límite.</p><div class="small">Útil para organización personal.</div></div>
+        <div class="card"><div class="term"><span class="num">B</span>Espacio → Reserva</div><p>Inicio, fin y choques de horario.</p><div class="small">Útil para reservar aulas o canchas.</div></div>
+        <div class="card"><div class="term"><span class="num">C</span>Categoría → Gasto</div><p>Monto, fecha y total del mes.</p><div class="small">Útil para controlar gastos.</div></div>
+      </div>
+      <div class="callout orange"><strong>Una decisión por equipo:</strong> el dominio se registra en la propuesta de la sesión 4 y no se cambia después del Hito 1.</div>
+""",
+        )
+    )
+    partes.append(
+        diapositiva(
+            """
+      <div class="kicker">Los cuatro hitos</div>
+      <h2>Un producto que crece por partes</h2>
+      <div class="timeline">
+        <div class="step"><div class="time">Sesión 10 &bull; 7.5%</div><strong>1. Contrato y mock</strong><p>API en memoria, OpenAPI, validación y 8 pruebas.</p></div>
+        <div class="step"><div class="time">Sesión 20 &bull; 7.5%</div><strong>2. Capas y seguridad</strong><p>Router/servicio/repositorio, JWT, roles y 10 pruebas.</p></div>
+        <div class="step"><div class="time">Sesión 30 &bull; 7.5%</div><strong>3. Persistencia y OWASP</strong><p>ORM, migración, transacciones, SQLi y 12 pruebas.</p></div>
+        <div class="step"><div class="time">Sesión 40 &bull; 7.5%</div><strong>4. Producto</strong><p>SPA, Dockerfile, E2E y demo de 5 minutos.</p></div>
+      </div>
+      <div class="callout green"><strong>Cada hito es acumulativo:</strong> no se reescribe desde cero; se mejora lo anterior.</div>
+""",
+        )
+    )
+    partes.append(
+        diapositiva(
+            """
+      <div class="kicker green">Cómo pido avances</div>
+      <h2>Cuatro momentos, no solo el final</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Calendario</h3>
+          <ul class="clean">
+            <li><strong>Sesión 4:</strong> propuesta de una página.</li>
+            <li><strong>Sesión 15:</strong> checkpoint 1.</li>
+            <li><strong>Sesión 25:</strong> checkpoint 2.</li>
+            <li><strong>Sesión 35:</strong> ensayo del Hito 4.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Qué entregan</h3>
+          <p><strong>Hecho</strong> con evidencia · <strong>Siguiente</strong> con fecha · <strong>Bloqueo</strong> concreto · <strong>Demo</strong> de 3 minutos.</p>
+          <div class="small" style="margin-top:8px;">Si falta el checkpoint, el hito se limita a 70% hasta regularizarse.</div>
+        </div>
+      </div>
+      <div class="callout orange"><strong>No es un trámite:</strong> el checkpoint existe para detectar el riesgo cuando todavía hay tiempo de corregirlo.</div>
+""",
+        )
+    )
+    partes.append(
+        diapositiva(
+            """
+      <div class="kicker red">Reglas y evaluación</div>
+      <h2>Qué se vale y qué no</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Sí</h3>
+          <ul class="clean">
+            <li>FastAPI o PHP 8 con aprobación.</li>
+            <li>SQLite o PostgreSQL.</li>
+            <li>HTML, CSS y JavaScript vanilla.</li>
+            <li>IA como copiloto, con auditoría.</li>
+            <li>Dockerfile y demo en Codespaces/Render.</li>
+          </ul>
+        </div>
+        <div class="card" style="border-left:4px solid var(--red);">
+          <h3>No</h3>
+          <ul class="clean">
+            <li>React, Vue o Angular.</li>
+            <li>Pagos, chat, tiempo real o IA en el producto.</li>
+            <li>Tercera entidad o funciones extra.</li>
+            <li>Copiar el dominio o el código de los laboratorios.</li>
+            <li>Secretos o contraseñas en el repositorio.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout blue"><strong>Evaluación por hito:</strong> 40% funcionalidad · 20% seguridad · 20% pruebas · 10% documentación · 10% demo. La nota individual se ajusta con commits y defensa.</div>
+""",
+        )
+    )
+    partes.append(
+        diapositiva(
+            """
+      <div class="kicker">Primer paso</div>
+      <h2>Antes de la sesión 4</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>La propuesta</h3>
+          <ul class="clean">
+            <li>Equipo de 2 y roles.</li>
+            <li>Dominio elegido.</li>
+            <li>2 entidades y sus campos.</li>
+            <li>8–10 endpoints.</li>
+            <li>5 casos de prueba y 3 riesgos.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Dónde está todo</h3>
+          <p>La guía completa, las plantillas de propuesta, checkpoint y equipo, y los checklists de los cuatro hitos.</p>
+          <div class="small" style="margin-top:8px;">Abre la guía y empieza por <code>docs/00-propuesta.md</code>.</div>
+        </div>
+      </div>
+      <div class="buttons">
+        <a class="btn primary" href="https://github.com/ijmarquezl/tecnm-desarrollo-web/blob/main/proyecto_integrador/GUIA.md">Abrir la guía oficial &rarr;</a>
+        <a class="btn" href="https://github.com/ijmarquezl/tecnm-desarrollo-web/blob/main/proyecto_integrador/docs/00-propuesta.md">Plantilla de propuesta</a>
+      </div>
+      <div class="footer-note">MCC. Iván Márquez Larios &bull; TecNM Cancún &bull; DAB-2201</div>
+""",
+        )
+    )
+    partes.append(pie_html())
+    return "".join(partes)
 
 
 def main() -> None:
@@ -1434,6 +1634,10 @@ def main() -> None:
 
     (RAIZ / "index.html").write_text(portada_sitio(sesiones), encoding="utf-8")
     print("✅ Portada del sitio (index.html)")
+    (RAIZ / "presentaciones" / "proyecto-integrador.html").write_text(
+        presentacion_proyecto(), encoding="utf-8"
+    )
+    print("✅ Presentación del Proyecto Integrador")
 
     if not args.sin_readme:
         (RAIZ / "README.md").write_text(leerme(sesiones), encoding="utf-8")
